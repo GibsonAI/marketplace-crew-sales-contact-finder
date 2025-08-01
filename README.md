@@ -1,20 +1,69 @@
-# CrewAI Marketplace Template
+# Sales Contact Finder Crew
 
-Welcome to the CrewAI Marketplace Template! This project is designed to help you build and submit your own AI crew templates to the [CrewAI Marketplace](https://marketplace.crewai.com). Using the powerful [crewAI](https://crewai.com) framework, you can create multi-agent AI systems that collaborate effectively on complex tasks, and then share them with the community.
+A CrewAI-powered sales contact finder that identifies and researches potential contacts at target companies for sales outreach.
 
-## What is a Crew Template?
+## Overview
 
-A crew template is a pre-configured set of AI agents, tasks, and workflows that solve a specific problem or perform a particular function. By creating a crew template, you make it easy for others to deploy sophisticated multi-agent systems for their own needs.
+This crew automates the process of:
+1. **Company Research** - Gathering comprehensive information about target companies
+2. **Organizational Analysis** - Understanding company structure and decision-makers
+3. **Contact Discovery** - Finding specific individuals and their contact information
+4. **Sales Strategy** - Developing personalized outreach approaches
 
-**Approved templates will be hosted in the CrewAI Enterprise application**, giving your creation visibility to a wide range of enterprise users.
+## Features
 
-## Getting Started with This Template
+- Multi-agent collaboration for comprehensive sales research
+- Integration with web scraping and search tools
+- Automatic contact storage in GibsonAI database
+- Personalized sales strategy generation
+- Professional markdown report output
 
-This template provides a foundation for creating your own marketplace-ready crew. Below are the steps to customize it for your specific use case.
+## 🧠 Generate GibsonAI Schema
 
-## Installation
+In [GibsonAI](https://app.gibsonai.com), use the following prompt to create your schema in a new project:
 
-Ensure you have Python >=3.10 <3.13 installed on your system. This project uses [UV](https://docs.astral.sh/uv/) for dependency management and package handling, offering a seamless setup and execution experience.
+```txt
+- I want to create a sales contact aggregator agent. It will store company and contact information.
+- Generate a “sales_contact” table with fields (company_id, name, title, linkedin_url, phone, email). Also create a “sales_company” table with fields (name). All string fields, except name, are nullable.
+```
+
+Once it's generated, click `Deploy` to Production and then copy the API key from the `Data API` tab.
+
+## ⚙️ Setup Instructions
+
+### 1. Clone the `awesome-gibson` repo
+
+```bash
+git clone https://github.com/GibsonAI/marketplace-crew-sales-contact-finder.git
+cd marketplace-crew-sales-contact-finder
+```
+
+### 2. Create your `.env` file
+
+```bash
+cp .env.example .env
+```
+
+Update `.env` with your keys:
+
+```env
+GIBSONAI_API_KEY=your_project_api_key
+SERPER_API_KEY=your_serper_api_key
+OPENAI_API_KEY=your_openai_api_key
+```
+
+> 🔑 Need a Serper key? [Sign up here](https://serper.dev/)
+
+You can also use other LLM model of your choice, not just OpenAI models.
+
+### 3. Create and activate a virtual environment
+
+```bash
+uv venv
+source .venv/bin/activate  # or .venv\Scripts\activate on Windows
+```
+
+### 4. Install dependencies
 
 First, if you haven't already, install uv:
 
@@ -22,73 +71,116 @@ First, if you haven't already, install uv:
 pip install uv
 ```
 
-Next, navigate to your project directory and install the dependencies:
-
-(Optional) Lock the dependencies and install them by using the CLI command:
-```bash
-crewai install
-```
-
-### Creating Your Project README
-
-When preparing your crew for the marketplace, it's essential to replace this template README with your own. Your README should include:
-
-- **Title**: A clear, descriptive title for your crew
-- **Description**: A detailed explanation of what your crew does, what problem it solves, and why it's valuable
-- **Example Use Cases**: Real-world scenarios where your crew would be helpful
-- **Dependencies**: List all required dependencies, APIs, or external services
-- **Configuration Instructions**: How to set up and customize your crew
-- **Usage Examples**: Sample commands and expected outputs
-
-A well-crafted README is critical for marketplace acceptance and helps users understand how to leverage your crew effectively.
-
-### LLM Flexibility and Custom Tools
-
-You are encouraged to:
-- **Use any LLM model** of your choice, not just OpenAI models
-- **Implement custom tools** that enhance your crew's capabilities
-- Optimize your crew for specific use cases or industries
-
-Creating a template with unique tools and model flexibility will make your submission more valuable to the marketplace users.
-
-When designing your crew for the marketplace, focus on creating a solution that:
-- Solves a specific, valuable problem
-- Has clear inputs and outputs
-- Is easy for users to understand and implement
-- Demonstrates the power of multi-agent collaboration
-
-## Running Your Crew
-
-To test your crew of AI agents and verify task execution, run this from the root folder of your project:
+Next install dependencies:
 
 ```bash
-$ crewai run
+uv pip install -e .
 ```
 
-This command initializes your crew, assembling the agents and assigning them tasks as defined in your configuration.
+## 🚀 Running the Crew
 
-The example template, unmodified, will create a `report.md` file with research on LLMs in the root folder.
+```bash
+crewai run
+```
 
-## Preparing for Marketplace Submission
+## Agents
 
-Before submitting your crew template to the [CrewAI Marketplace](https://marketplace.crewai.com), ensure:
-1. You've replaced this template README with your own custom README (as outlined in the "Creating Your Project README" section)
-2. Your code is well-documented
-3. The configuration files are clear and properly formatted
-4. You've tested the crew thoroughly with different inputs
-5. Your README explains what the crew does and how users can customize it for their needs
-6. You've specified any special LLM requirements or custom tools needed
-7. All dependencies are clearly listed and version-pinned where appropriate
+### 1. Company Researcher
+- **Role**: Gathers comprehensive company information
+- **Tools**: SerperDevTool, ScrapeWebsiteTool
+- **Focus**: Industry analysis, recent news, technology initiatives
 
-Remember that approved templates will be featured in the CrewAI Enterprise application, so enterprise-ready templates with clear business value have a higher chance of being approved.
+### 2. Organizational Structure Analyst
+- **Role**: Analyzes company hierarchy and decision-making
+- **Tools**: SerperDevTool, ScrapeWebsiteTool
+- **Focus**: Identifying key roles and departments
 
-## Support
+### 3. Contact Finder
+- **Role**: Locates specific individuals and contact information
+- **Tools**: SerperDevTool, ScrapeWebsiteTool, ContactStorageTool
+- **Focus**: Finding decision-makers and their contact details
 
-For support, questions, or feedback regarding this template or crewAI:
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
-- For marketplace submission questions: [marketplace.crewai.com](https://marketplace.crewai.com)
+### 4. Sales Strategist
+- **Role**: Develops personalized outreach strategies
+- **Tools**: None (uses information from other agents)
+- **Focus**: Creating actionable sales approaches
 
-Let's build the future of AI agent marketplaces together with crewAI!
+## Output
+
+The crew generates:
+- **JSON Contact Data**: Stored automatically in GibsonAI database
+- **Sales Strategy Report**: Markdown file with personalized outreach strategies
+- **Console Output**: Real-time progress and results
+
+## Configuration
+
+- **Agents**: Configured in `src/sales_contact_finder_crew/config/agents.yaml`
+- **Tasks**: Configured in `src/sales_contact_finder_crew/config/tasks.yaml`
+- **Tools**: Custom tools in `src/sales_contact_finder_crew/tools/`
+
+## API Integration
+
+The crew automatically stores discovered contacts in your GibsonAI database using the hosted API. Make sure to:
+1. Set up your `GIBSONAI_API_KEY` environment variable
+2. Ensure your GibsonAI project has the sales contact schema deployed
+
+## Example Output
+
+Generated contact information with sales strategy will be saved to:
+
+```txt
+output/
+└── buyer_contact.md
+```
+
+```markdown
+# Sales Strategy Report for Example Corp
+
+## Executive Summary
+Based on our research, Example Corp is actively expanding their AI initiatives...
+
+## Company Analysis
+- Industry: Technology/SaaS
+- Size: 500+ employees
+- Recent funding: $50M Series B
+...
+
+## Target Contacts
+1. **John Smith** - VP of Engineering
+   - LinkedIn: https://linkedin.com/in/johnsmith
+   - Email: john.smith@example.com
+   - Background: 10+ years in AI/ML...
+
+## Outreach Strategy
+### For VP of Engineering (John Smith)
+- Value Prop: Focus on technical efficiency gains...
+- Pain Points: Current manual processes, scaling challenges...
+- Recommended Approach: Technical demo, ROI calculator...
+```
+
+## Development
+
+### Project Structure
+```
+sales_contact_finder_crew/
+├── src/sales_contact_finder_crew/
+│   ├── __init__.py
+│   ├── main.py                 # Entry point
+│   ├── crew.py                 # Crew definition
+│   ├── config/
+│   │   ├── agents.yaml         # Agent configurations
+│   │   └── tasks.yaml          # Task configurations
+│   └── tools/
+│       ├── __init__.py
+│       └── contact_storage_tool.py  # Custom tool for storing contacts
+├── pyproject.toml              # Project configuration
+└── README.md
+```
+
+### Adding New Tools
+1. Create tool in `src/sales_contact_finder_crew/tools/`
+2. Import and add to relevant agents in `crew.py`
+3. Update agent configurations if needed
+
+### Customizing Agents/Tasks
+Edit the YAML files in the `config/` directory to modify agent roles, goals, backstories, task descriptions, and expected outputs.

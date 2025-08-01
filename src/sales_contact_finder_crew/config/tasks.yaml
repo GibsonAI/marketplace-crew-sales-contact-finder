@@ -1,0 +1,127 @@
+research_company_task:
+  description: >
+    Conduct thorough research on {target_company}. Focus on their industry,
+    size, recent news, challenges they might be facing, and any information
+    that suggests they might benefit from {our_product}. Look for recent
+    technology initiatives, digital transformation efforts, funding rounds,
+    expansion plans, and any pain points that your product could address.
+    
+    Key areas to investigate:
+    - Company size and revenue
+    - Industry and market position
+    - Recent news and developments
+    - Technology stack and initiatives
+    - Business challenges and opportunities
+    - Competitive landscape
+  expected_output: >
+    A comprehensive company research report including:
+    - Company overview and key facts
+    - Industry analysis and market position
+    - Recent developments and news
+    - Technology initiatives and digital transformation efforts
+    - Identified pain points that {our_product} could address
+    - Strategic insights for sales approach
+  agent: company_researcher
+
+analyze_org_structure_task:
+  description: >
+    Analyze the organizational structure of {target_company} based on the research
+    findings. Identify key departments and roles that are likely to be involved 
+    in decisions related to purchasing {our_product}. Consider both technical 
+    decision-makers and business stakeholders.
+    
+    Focus on identifying:
+    - C-level executives and VP-level leaders
+    - Department heads in relevant areas
+    - Technical decision-makers
+    - Budget holders and influencers
+    - Innovation and transformation leaders
+  expected_output: >
+    An organizational analysis report containing:
+    - Breakdown of {target_company}'s relevant organizational structure
+    - Key departments and their roles in decision-making
+    - Hierarchy and reporting relationships
+    - Decision-making process insights
+    - Target roles and titles for {our_product} sales approach
+  agent: org_structure_analyst
+
+find_key_contacts_task:
+  description: >
+    Based on the organizational analysis and company research, identify specific 
+    individuals at {target_company} who are in positions to influence or make 
+    decisions about purchasing {our_product}. Find their names, titles, and if 
+    possible, professional contact information or LinkedIn profiles.
+    
+    For each contact, gather:
+    - Full name and current title
+    - Department and reporting structure
+    - LinkedIn profile URL
+    - Professional email (if available)
+    - Phone number (if available)
+    - Background and experience relevant to {our_product}
+  expected_output: >
+    A structured list of key contacts with their information. Create a JSON payload 
+    with the following format:
+    {
+      "company_name": "{target_company}",
+      "contacts": [
+        {
+          "name": "Contact Name",
+          "title": "Job Title",
+          "department": "Department Name",
+          "linkedin_url": "LinkedIn URL or N/A",
+          "phone": "Phone number or N/A",
+          "email": "Email address or N/A",
+          "background": "Relevant background information"
+        }
+      ]
+    }
+    
+    Use the ContactStorageTool to store this information in the database.
+    Provide at least 3-5 high-quality contacts with complete information.
+  agent: contact_finder
+
+develop_approach_strategy_task:
+  description: >
+    Using all the gathered information about {target_company} and the identified
+    contacts, develop a comprehensive strategy for approaching these individuals 
+    about {our_product}. Consider the company's challenges, the contacts' roles,
+    and how our product can provide value to them.
+    
+    Create personalized approach strategies for each contact, including:
+    - Value proposition tailored to their role
+    - Pain points to address in outreach
+    - Recommended communication channels
+    - Timing considerations
+    - Follow-up strategies
+    - Key talking points and demos
+    
+    IMPORTANT: Remove any comments like "my best complete final answer to the task"
+    from your response. Provide only the strategic content.
+  expected_output: >
+    A comprehensive sales strategy report in Markdown format containing:
+    
+    # Sales Strategy Report for {target_company}
+    
+    ## Executive Summary
+    Brief overview of the opportunity and recommended approach
+    
+    ## Company Analysis
+    Key insights about {target_company} and market opportunity
+    
+    ## Target Contacts
+    Detailed profiles of identified decision-makers
+    
+    ## Outreach Strategy
+    Personalized approach for each contact including:
+    - Value proposition
+    - Pain points to address
+    - Recommended messaging
+    - Communication channels
+    - Timing and follow-up plan
+    
+    ## Next Steps
+    Immediate actions and timeline for sales team
+    
+    The report must be professional, actionable, and ready for use by the sales team.
+  agent: sales_strategist
